@@ -4,12 +4,20 @@ const express = require('express');
 const jsforceAjaxProxy = require('./proxy');
 const app = express();
 
-const region = functions.config().proxy.region || 'us-central1';
+function regions() {
+  if (functions.config().proxy.region) {
+    return functions.config().proxy.region.split(',');
+  }
+  return ['us-central1'];
+}
+
 const allowedOrigin = functions.config().proxy.allowedOrigin;
 
-app.all('/?*', jsforceAjaxProxy({
+app.all('/proxy/?*', jsforceAjaxProxy({
   enableCORS: true,
   allowedOrigin
 }));
 
-exports.proxy = functions.region(region).https.onRequest(app);
+regions().forEach(region => {
+  exports[region.replace(/-/g, '_')] = functions.region(region).https.onRequest(app);
+});
