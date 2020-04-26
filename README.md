@@ -4,7 +4,7 @@ In this project, [JSforce AJAX Proxy](https://github.com/jsforce/jsforce-ajax-pr
 
 There is the follwoing change from JSforce AJAX Proxy. Therefore, I do not use JSforce AJAX Proxy directly. 
 
-* Added `Sforce-Call-Options` in `Access-Control-Allow-Headers`
+* Added `Sforce-Call-Options` and `Sforce-Query-Options` in `Access-Control-Allow-Headers`
 
 ## Usage
 

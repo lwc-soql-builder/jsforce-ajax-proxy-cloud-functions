@@ -14,7 +14,8 @@ const ALLOWED_HEADERS = [
   'SForce-Auto-Assign',
   'If-Modified-Since',
   'X-User-Agent',
-  'Sforce-Call-Options'
+  'Sforce-Call-Options',
+  'Sforce-Query-Options'
 ];
 
 /**
