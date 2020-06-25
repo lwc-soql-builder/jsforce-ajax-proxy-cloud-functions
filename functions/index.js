@@ -1,8 +1,6 @@
 const functions = require('firebase-functions');
 
-const express = require('express');
 const jsforceAjaxProxy = require('./proxy');
-const app = express();
 
 function regions() {
   if (functions.config().proxy.region) {
@@ -11,13 +9,13 @@ function regions() {
   return ['us-central1'];
 }
 
-const allowedOrigin = functions.config().proxy.allowedOrigin;
+const allowedOrigin = functions.config().proxy.allowed_origin;
 
-app.all('/proxy/?*', jsforceAjaxProxy({
+const proxy = jsforceAjaxProxy({
   enableCORS: true,
   allowedOrigin
-}));
+});
 
 regions().forEach(region => {
-  exports[region.replace(/-/g, '_')] = functions.region(region).https.onRequest(app);
+  exports[region.replace(/-/g, '_')] = functions.region(region).https.onRequest(proxy);
 });
